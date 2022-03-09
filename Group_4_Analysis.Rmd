@@ -1,0 +1,17 @@
+---
+title: "Group 4- Project 2"
+author: "2326127C"
+date: "09/03/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, eval=TRUE, echo=FALSE}
+library(tidyverse)
+library(readr)
+
+dataset4 <- read_csv("dataset4.csv")
+```
