@@ -267,7 +267,54 @@ genre.Short = ranks.genre %>%
 genre.Short[1:10,]
 ###########
 
-model5 = glm(genre ~ new.rating, data = genre.Action, family = binomial(link = "logit"))
+#model5, full model
+model5 = glm(new.rating ~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "logit"))
+summary(model5)  # logit(genreAnimation)/logit(genreAction) = exp(-0.489039)
+
+logit.step.forward = step(model5,direction="forward")   
+summary(logit.step.forward)
+
+logit.step.backward = step(model5,direction="backward")
+summary(logit.step.backward)
+
+logit.stepwise = step(model5,direction="both")
+summary(logit.stepwise)     #keep invalid values, as long as the whole model is statistically evident
+
+stepAIC(model5) 3#another solution
+
+
+#model6, remove invalid variables
+genre.noRomanceandAnimation = films %>%
+  filter(genre != "Romance" ) %>%
+  filter(genre != "Animation") %>%
+  drop_na
+genre.noRomanceandAnimation[1:20,]
+
+#unique(genre.noRomanceandAnimation$genre)
+
+model6 = glm(new.rating ~ year + length + budget + genre, data = genre.noRomanceandAnimation, family = binomial(link = "logit"))
+summary(model6)
+
+logit.stepwise.6 = step(model6, direction = "both")
+summary(logit.stepwise.6)
+
+
+####################
+#model7 and 8, link functions are probit and cloglog
+films$new.rating2 = cut(films$rating, breaks = c(0, 7, 10),            
+                       labels = c(-1,0))          #divide rating into two groups(below 7,and more than 7)
+films$new.rating2[which(films$new.rating2 == "1")] = 0
+films$new.rating2[which(films$new.rating2 == "2")] = 1
+films$new.rating2 = as.numeric(films$new.rating2)
+films$new.rating2
+
+model7 = glm(films$new.rating2 ~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "cloglog"))
+model8 = glm(films$new.rating2 ~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "probit"))
+
+summary(model7)
+summary(model8)
+
+qchisq(0.95, df = 10)  #m7,m8. df = 10 = 1833-1823, reject null assumptions, models are valid
 
 
 
