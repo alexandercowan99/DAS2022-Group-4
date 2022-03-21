@@ -88,57 +88,6 @@ grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
 ```
 
 
-## 2.2 Exploratory Data Analysis 
-Summary statistics were presented in the following table for each factor separately.
-```{r, eval = TRUE}
-dataset4$rating[which(dataset4$rating>7)] <- "TRUE"
-dataset4$rating[which(dataset4$rating<=7)] <- "FALSE"
-
-
-dataset <- dataset4 %>% 
-  filter(rating==TRUE) 
-
-my_skim <- skim_with(base = sfl(n = length))
-
-dataset %>%
-  select(year,length,budget,votes) %>%
-  my_skim() %>%
-  transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
-            Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
-            Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
-  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating larger than 7).',
-        booktabs = TRUE, linesep = "", digits = 2) 
-```
-
-
-```{r, eval = TRUE}
-
-dataset <- dataset4 %>% 
-  filter(rating==FALSE) 
-
-my_skim <- skim_with(base = sfl(n = length))
-
-dataset %>%
-  select(year,length,budget,votes) %>%
-  my_skim() %>%
-  transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
-            Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
-            Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
-  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating smaller than 7).',
-        booktabs = TRUE, linesep = "", digits = 2) 
-```
-
-```{r, eval = TRUE}
-dataset %>% 
-  tabyl(genre,rating) %>% 
-  adorn_percentages() %>% 
-  adorn_pct_formatting() %>% 
-  adorn_ns()
-ggplot(dataset, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
-    geom_bar(position="dodge", stat="count") +
-    labs(y = "Proportion")
-```
-
 
 ### Formal Data Analysis
 
