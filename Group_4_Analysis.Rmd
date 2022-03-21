@@ -21,6 +21,7 @@ library(ggplot2)
 library(MASS)
 library(knitr)
 library(janitor)
+library(readr)
 library(gridExtra)
 library(combinat)
 library(MuMIn)
@@ -35,7 +36,7 @@ films <- read_csv("dataset4.csv")
 
 ### Introduction
 
-Our group has been assigned to work with a database of films from the IMDB which contains information about a number of films and rating out of 10 for each films. The variables in the database are:
+Our group has been assigned to work with a database of films from IMDB which contains information about a number of films and rating out of 10 for each films. The variables in the database are:
 
 * Film.id- a unique identifying number for the film
 * Year of release
@@ -50,7 +51,7 @@ Our task is the find which properties of a film influence whether a film receive
 
 ### Exploratory Data Analysis 
 
-We are interested in plotting the relationships between IMBD rating and each of the explanatory variables.
+First we will plot the relationships between IMBD rating and each of the explanatory variables. Each plot has a red dotted line at rating equals 7 as we are interested in films that receive a rating over 7.
 
 ```{r, eval=TRUE, echo=FALSE}
 p1 <- ggplot(data = films, aes(x = year, y = rating, fill = rating)) +
@@ -88,9 +89,8 @@ grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
 ```
 
 
-## 2.2 Exploratory Data Analysis 
 Summary statistics were presented in the following table for each factor separately.
-```{r, eval = TRUE}
+```{r, eval = TRUE, echo=FALSE}
 films$rating[which(films$rating>7)] <- "TRUE"
 films$rating[which(films$rating<=7)] <- "FALSE"
 
@@ -101,7 +101,7 @@ dataset <- films %>%
 my_skim <- skim_with(base = sfl(n = length))
 
 dataset %>%
-  select(year,length,budget,votes) %>%
+  dplyr::select(year,length,budget,votes) %>%
   my_skim() %>%
   transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
             Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
@@ -111,7 +111,7 @@ dataset %>%
 ```
 This table shows the year of production, length of films, film budget ($1 million), and the number of positive audience votes for all films rated 7.0 or higher. We are unable to show the genres of movies in this table and the following table, the genre analysis will be shown in the histogram below.
 
-```{r, eval = TRUE}
+```{r, eval = TRUE, echo=FALSE}
 
 dataset <- films %>% 
   filter(rating==FALSE) 
@@ -119,7 +119,7 @@ dataset <- films %>%
 my_skim <- skim_with(base = sfl(n = length))
 
 dataset %>%
-  select(year,length,budget,votes) %>%
+  dplyr::select(year,length,budget,votes) %>%
   my_skim() %>%
   transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
             Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
@@ -132,13 +132,13 @@ dataset %>%
 By comparing the two tables, we can find that the number of movies with a rating greater than 7.0 is significantly smaller than the number of movies with a rating less than 7.0. Movies with a rating greater than 7.0 generally have shorter movie durations and higher budgets. But in terms of voting. Movies rated less than 7.0 received more votes.
 
 
-```{r, eval = TRUE}
-dataset %>% 
+```{r, eval = TRUE, echo=FALSE}
+films %>% 
   tabyl(genre,rating) %>% 
   adorn_percentages() %>% 
   adorn_pct_formatting() %>% 
   adorn_ns()
-ggplot(dataset, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
+ggplot(films, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
     geom_bar(position="dodge", stat="count") +
     labs(y = "Proportion")
 ```
@@ -146,12 +146,12 @@ ggplot(dataset, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) +
 This histogram shows the genre of all movies with a rating greater than 7.0. Through this figure, we can find that comedy movies occupy a very large proportion of movies with a score greater than 7.0, while romance movies have almost no high rating.
 
 
-
 ### Formal Data Analysis
 
-We have created a new variable named over7 which is a binary variable which indicates whether the rating a film receved is over 7 or not. If a film has a rating over 7 it will have the value 1 in this variable. The explanatory variables we will use to model over 7 are- genre, votes, length, budget and year. There are 31 one unique ways to choose different combinations of these five explanatory variables so to start with we will fit all of these models and generate a table of the objective criteria of each model. This table can be found below:
+We have created a new variable named over7 which is a binary variable which indicates whether the rating a film received is over 7 or not. If a film has a rating over 7 it will have the value 1 in this variable. The explanatory variables we will use to model over 7 are- genre, votes, length, budget and year. There are 31 one unique ways to choose different combinations of these five explanatory variables so to start with we will fit all of these models and generate a table of the objective criteria of each model. This table can be found below:
 
 ```{r, echo=FALSE, eval=TRUE}
+films <- read_csv("dataset4.csv")
 films$over7 <- 0
 
 films$over7[films$rating>=7.0] <- 1
@@ -194,7 +194,7 @@ all_models %>%
   kable_styling(latex_options="scale_down")
 
 ```
-From this table we can see that there is a wide range of AIC, BIC and deviation values. When taking these values into consideration to help choose our model we can see that the models that include votes tend to perform worse than the others. Furthermore, we can see that based on the AIC and BIC values the model with year, length, budget and genre performs the best. If we were prepared to make a small comprimise in performance it could be argued that the best model to choose would be the model which only use length, budget and genre as it is simpler and has close to the best AIC and BIC models. The best model which includes two variables uses length and genre. The best single explanatory variable model is genre.
+From this table we can see that there is a wide range of AIC, BIC and deviation values. When taking these values into consideration to help choose our model we can see that the models that include votes tend to perform worse than the others. Furthermore, we can see that based on the AIC and BIC values the model with year, length, budget and genre performs the best. If we were prepared to make a small compromise in performance it could be argued that the best model to choose would be the model which only use length, budget and genre as it is simpler and has close to the best AIC and BIC models. The best model which includes two variables uses length and genre. The best single explanatory variable model is genre.
 
 We have investigated a handful of models in detail and we will share our discoveries below.
 
@@ -206,7 +206,7 @@ The first model is investigating the relationship between the year a film was re
 
 where,
 
-* 'Not over 7' is the baseline category for the over 7 variable,
+
 * $p$ is the probability that the film is ranked over 7,
 * year is the year the film was released,
 * $\alpha$ is the intercept value
@@ -216,8 +216,11 @@ where,
 ```{r, eval=TRUE}
 model1 = glm(over7 ~ year, data = films, 
              family = binomial(link = "logit"))
+
 model1 %>%
   summary()
+
+
 ```
 
 
@@ -258,7 +261,6 @@ The next model is investigating the relationship between the length of a film an
 
 where,
 
-* 'Not over 7' is the baseline category for the over 7 variable,
 * $p$ is the probability that the film is ranked over 7,
 * length is the length of the film in minutes,
 * $\alpha$ is the intercept value
@@ -309,7 +311,7 @@ The third model investigates the relationship between the budget of a film and w
 
 where,
 
-* 'Not over 7' is the baseline category for the over 7 variable,
+
 * $p$ is the probability that the film is ranked over 7,
 * budget is the budget of a film in $1000000s
 * $\alpha$ is the intercept value
@@ -342,11 +344,12 @@ rating_budget <- films %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model3))
 
-ggplot(data = rating_length, aes(x = length, y = probs.Excellent)) +
+ggplot(data = rating_budget, aes(x = budget, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
   labs(x = "Budget (in $1000000)", y = "Probability of films considered as Excellent films") 
+
 
 ```
 
@@ -359,9 +362,9 @@ The next model is investigating the relationship between the length of a film an
 where,
 
 
-* 'Not over 7' is the baseline category for the over 7 variable,
+
 * $p$ is the probability that the film is ranked over 7,
-* votes is the number of positve votes the film recieved by viewers,
+* votes is the number of positive votes the film received by viewers,
 * $\alpha$ is the intercept value
 * $\beta$ is the regression coefficient.
 
@@ -383,20 +386,21 @@ plot_model(model4, show.values = TRUE, transform = NULL,
            title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
-This tells us $\alpha$ = 0.06 and that $\beta = -0.2$. We can see that the p-values of the $\beta$ coefficient is significant even at the highest level but the intercept is . We can conclude that this is a model that performs okay but not as well as others.
+This tells us $\alpha$ = 0.06 and that $\beta = -0.2$. We can see that the p-values of the $\beta$ coefficient is significant even at the highest level but the intercept is not. We can conclude that this is a model that performs okay but not as well as others.
 
 ```{r, echo=FALSE}
-rating_budget <- films %>% 
+rating_votes <- films %>% 
   dplyr::select(over7, votes) %>% 
+  mutate(votes = log(votes)) %>% 
   mutate(logodds.Excellent = predict(model4)) %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model4))
 
-ggplot(data = rating_length, aes(x = length, y = probs.Excellent)) +
+ggplot(data = rating_votes, aes(x = votes, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
-  labs(x = "Votes Recieved", y = "Probability of films considered as Excellent films") 
+  labs(x = "log(Votes Recieved)", y = "Probability of films considered as Excellent films") 
 
 ```
 
@@ -433,7 +437,7 @@ The equation for this model is:
 where,
 
 
-* 'Not over 7' is the baseline category for the over 7 variable,
+
 * $p$ is the probability that the film is ranked over 7,
 * votes is the number of positve votes the film recieved by viewers,
 * $\alpha$ is the intercept value
@@ -459,12 +463,6 @@ plot_model(model5, show.values = TRUE, transform = NULL,
 
 This tells us $\alpha$ = 0.06 and that $\beta_{i}$ valeus are 2.77, 2.07, 3.91, -1.14, -1.13 and 6 for animation, comedy, documentary, drama, romance and short respectively. We can see that the p-values of every coefficient except the romance genre is significant even at the highest level. We can see that if a film is in the animation, comedy, documentary or short film categories it will improve the chances of the film getting a high score. We can conclude that this is a model that performs well and we can experiment with removing the romance genre films to see how it affects the model performance.
 
-```{r, echo=FALSE}
-plot_model(model5, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Film Genre)", show.p = FALSE)
-
-
-```
 #### Full Model
 
 We are now going to look at the full model with every explanatory variable in the model. This model has the following equation:
@@ -473,8 +471,6 @@ We are now going to look at the full model with every explanatory variable in th
 \end{align}
 where,
 
-
-* 'Not over 7' is the baseline category for the over 7 variable,
 * $p$ is the probability that the film is ranked over 7,
 * votes is the number of positve votes the film recieved by viewers,
 * genre is the genre of the film,
@@ -506,13 +502,13 @@ plot_model(model6, show.values = TRUE, transform = NULL,
 We can see that many of the variables are significant but there are also a substantial number that are not even at the 10% level. Using stepwise regression we can look to find an optimal model. As we found in the table earlier the "best model" includes length, budget, genre and year.
 
 ```{r, eval=TRUE, echo=TRUE}
-logit.step.forward = step(model5,direction="forward")   
+logit.step.forward = step(model6,direction="forward")   
 summary(logit.step.forward)
 
-logit.step.backward = step(model5,direction="backward")
+logit.step.backward = step(model6,direction="backward")
 summary(logit.step.backward)
 
-logit.stepwise = step(model5,direction="both")
+logit.stepwise = step(model6,direction="both")
 summary(logit.stepwise)   
 
 summary(stepAIC(model6))
@@ -528,11 +524,12 @@ We are now going to look at the model that has the lowest AIC value of all the p
 where,
 
 
-* 'Not over 7' is the baseline category for the over 7 variable,
+
 * $p$ is the probability that the film is ranked over 7,
 * genre is the genre of the film,
 * length is the length of the film in minutes,
 * budget is the budget of the film in $1000000,
+* year in the year the film was released,
 * $\alpha$ is the intercept value,
 * $\beta_{genre}$ is the regression value for the $i^th$ genre,
 * $\beta_{i}$ is the regression value for the $i^th$ variable.
@@ -586,41 +583,99 @@ plot_model(model8, show.values = TRUE, transform = NULL,
 
 Now every single variable in this model is significant to the highest level and the AIC is significantly less.
 
+#### Simplified Optimal Model
+
+When iterating through all of the possible models we found that the model that includes just the length, budget and genre of a film performs very similarly to the optimal model but it has the added benefit of being simpler. This model has the following equation:
+\begin{align} 
+\ln\left(\frac{p}{1-p}\right) &= \alpha + \beta_{genre} + \beta_{2} \cdot\textrm{length} + \beta_{3} \cdot\textrm{budget}
+\end{align}
+where,
+
+* $p$ is the probability that the film is ranked over 7,
+* genre is the genre of the film,
+* length is the length of the film in minutes,
+* budget is the budget of the film in $1000000,
+* $\alpha$ is the intercept value,
+* $\beta_{genre}$ is the regression value for the $i^th$ genre,
+* $\beta_{i}$ is the regression value for the $i^th$ variable.
+
+```{r, eval=TRUE}
+model9 = glm(over7 ~ length + budget + genre, data = films, 
+             family = binomial(link = "logit"))
+model9 %>%
+  summary()
+```
+
+
+
+```{r, echo=TRUE}
+confint(model9) %>%
+  kable() 
+
+plot_model(model9, show.values = TRUE, transform = NULL,
+           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+```
+
+This gives very similar results to the optimal model but it is simpler.
+
 #### C log-log and Probit Models
 
 We will now try using c log-log and a probit models to investigate the relationship between the explanatory variables and a film getting a score above 7. We will use all the explanatory variables in this model. We will also use stepwise regression to find the most optimal models for each method.
 
 ```{r}
 
-model9 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "cloglog"))
-
-summary(model9)
-
-model10 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "probit"))
+model10 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "cloglog"))
 
 summary(model10)
-cloglog.step.forward = step(model9,direction="forward")   
+
+plot_model(model10, show.values = TRUE, transform = NULL,
+           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+
+model11 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "probit"))
+
+summary(model11)
+
+plot_model(model11, show.values = TRUE, transform = NULL,
+           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+cloglog.step.forward = step(model10,direction="forward")   
 summary(cloglog.step.forward)
 
-cloglog.step.backward = step(model9,direction="backward")
+cloglog.step.backward = step(model10,direction="backward")
 summary(cloglog.step.backward)
 
-cloglog.stepwise = step(model9,direction="both")
+cloglog.stepwise = step(model10,direction="both")
 summary(cloglog.stepwise)                                         
 
 
-probit.step.forward = step(model10,direction="forward")   
+probit.step.forward = step(model11,direction="forward")   
 summary(probit.step.forward)
 
-probit.step.backward = step(model10,direction="backward")
+probit.step.backward = step(model11,direction="backward")
 summary(probit.step.backward)
 
-probit.stepwise = step(model10,direction="both")
+probit.stepwise = step(model11,direction="both")
 summary(probit.stepwise) 
 
-AIC(model6,model9,model10) 
-BIC(model6,model9,model10)
+AIC(model6,model10,model11) 
+BIC(model6,model10,model11)
 
 ```
 We yield very similar results to our binomial regression model, to see whether these models are better suited for our data we can use the AIC values. In each of the stepwise regression methods to optimal model was found to have budget, genre, length and year as the explanatory variables. Our original model has the lowest AIC and BIC values so we will keep using the binomial regression method.
+
+
+### Conclusion
+
+In conclusion, we have investigated which properties influence whether a film receives a rating greater than 7 on the IMDB database. Out of all combinations of the 5 explanatory variables we have found that the best model for predicting whether a film will receives a rating greater than 7 includes the length of the film, the budget of the film, the genre of the film and the year the film was released. We settled on this model by iterating through all the possible combinations of models and choosing the model with the lowest AIC and BIC. We also used stepwise regression to corroborate this choice. 
+
+In the optimal model year and length of film have a significant influence on the probability that a film will receive a rating greater than 7 but the relative influence of these variables is small. The log odds of a film being rated over 7 will increase by 0.01 for every unit increase in the year of release of the film. Similarly, the log odds of a film being rated over 7 will decrease by 0.07 for every minute increase in the film length. For every $1000000 increase of a films budget the log odds that the film will receive a score larger than 7 will increase by 0.52. The biggest influence on the log odds of the film receiving an excellent score is the film genre. In the optimal AIC model we found that only two of the genres are insignificant when predicting if the score of a film will be greater than 7 and these are animation and romance. The categories comedy, documentary and short film all have a positive influence on the log odds of getting a rating larger than 7 with increases of 3.16, 5.27 and 3.48 respectively. If the genre of the film is drama then the log odds of it receiving a score greater than 7 is reduced by 1.68. Therefore in this optimal AIC model we can say that the genre of the film has the largest influence on whether a film will receive a score greater than 7 followed by the budget of the film. Although they are significant in the model the length of the film and the year of the film have a less significant impact on the outcome of the films rating.
+
+Alongside finding the optimal model we also investigated other combinations of explanatory variables that could be used to model film rating. We found that in models with a single explanatory variable that numerical explanatory variable that the length of a film and the budget of a film each had significant impact on the log odds that a film receives a rating over 7. An increase of $1000000 increases the log odds by 0.18 and a minute increase in the length of a film decreases the log odds by 0.04. When modelling the rating and the film categories we can see that the category on the film has a large influence of the log odds of being greater than 7. The log odds difference in this model for the genres animation, comedy, documentary, drama, romance and short are 2.77, 2.07, 3.91, -1.14, -1.13 and 6 respectively. This is a big range of values, especially compared to the other factors, which means that depending on the category of film the probability of getting an excellent score is very different.
+
+We also looked at altering the dataset by removing the insignificant variables from the optimal AIC model, the animation and romance genres, and fitting the optimal model again. We discovered that the renaming variables stayed significant at the highest level and that their coefficient values stayed very similar ot the same. 
+
+We looked at fitting a model which only includes length budget and genre as we found that this model had AIC and BIC values that were very similar to the optimal model but this model has the benefit of being simpler. The coefficients calculated were very similar to the optimal model and the explanatory variables had the same levels of significance. Therefore, unless the data for the year of release was unavailable, there are no significant benefits to using the model with these three variables and we can keep the same optimal model.
+
+Other models we have investigated includes the full model which involves every single explanatory variable. The full model has similar AIC and BIC values to the optimal model we found but the inclusion of the log of the amount of positive votes a film receives is detrimental to the model. Furthermore we assessed whether using probit or a c log-log with the full model would improve model performance. We found that although the results were very similar the original logit regression had smaller AIC values.
+
+
 
