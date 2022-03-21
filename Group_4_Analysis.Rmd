@@ -88,6 +88,64 @@ grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
 ```
 
 
+## 2.2 Exploratory Data Analysis 
+Summary statistics were presented in the following table for each factor separately.
+```{r, eval = TRUE}
+dataset4$rating[which(dataset4$rating>7)] <- "TRUE"
+dataset4$rating[which(dataset4$rating<=7)] <- "FALSE"
+
+
+dataset <- dataset4 %>% 
+  filter(rating==TRUE) 
+
+my_skim <- skim_with(base = sfl(n = length))
+
+dataset %>%
+  select(year,length,budget,votes) %>%
+  my_skim() %>%
+  transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
+            Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
+            Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
+  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating larger than 7).',
+        booktabs = TRUE, linesep = "", digits = 2) 
+```
+This table shows the year of production, length of films, film budget ($1 million), and the number of positive audience votes for all films rated 7.0 or higher. We are unable to show the genres of movies in this table and the following table, the genre analysis will be shown in the histogram below.
+
+```{r, eval = TRUE}
+
+dataset <- dataset4 %>% 
+  filter(rating==FALSE) 
+
+my_skim <- skim_with(base = sfl(n = length))
+
+dataset %>%
+  select(year,length,budget,votes) %>%
+  my_skim() %>%
+  transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
+            Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
+            Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
+  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating smaller than 7).',
+        booktabs = TRUE, linesep = "", digits = 2) 
+```
+
+
+By comparing the two tables, we can find that the number of movies with a rating greater than 7.0 is significantly smaller than the number of movies with a rating less than 7.0. Movies with a rating greater than 7.0 generally have shorter movie durations and higher budgets. But in terms of voting. Movies rated less than 7.0 received more votes.
+
+
+```{r, eval = TRUE}
+dataset %>% 
+  tabyl(genre,rating) %>% 
+  adorn_percentages() %>% 
+  adorn_pct_formatting() %>% 
+  adorn_ns()
+ggplot(dataset, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
+    geom_bar(position="dodge", stat="count") +
+    labs(y = "Proportion")
+```
+
+This histogram shows the genre of all movies with a rating greater than 7.0. Through this figure, we can find that comedy movies occupy a very large proportion of movies with a score greater than 7.0, while romance movies have almost no high rating.
+
+
 
 ### Formal Data Analysis
 
