@@ -91,11 +91,11 @@ grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
 ## 2.2 Exploratory Data Analysis 
 Summary statistics were presented in the following table for each factor separately.
 ```{r, eval = TRUE}
-dataset4$rating[which(dataset4$rating>7)] <- "TRUE"
-dataset4$rating[which(dataset4$rating<=7)] <- "FALSE"
+films$rating[which(films$rating>7)] <- "TRUE"
+films$rating[which(films$rating<=7)] <- "FALSE"
 
 
-dataset <- dataset4 %>% 
+dataset <- films %>% 
   filter(rating==TRUE) 
 
 my_skim <- skim_with(base = sfl(n = length))
@@ -113,7 +113,7 @@ This table shows the year of production, length of films, film budget ($1 millio
 
 ```{r, eval = TRUE}
 
-dataset <- dataset4 %>% 
+dataset <- films %>% 
   filter(rating==FALSE) 
 
 my_skim <- skim_with(base = sfl(n = length))
