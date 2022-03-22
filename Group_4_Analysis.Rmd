@@ -22,6 +22,7 @@ library(ggplot2)
 library(MASS)
 library(knitr)
 library(janitor)
+library(grid)
 library(readr)
 library(gridExtra)
 library(combinat)
@@ -90,7 +91,9 @@ p5 <- ggplot(data = films, aes(x=genre, y=rating, fill=genre)) +
     labs(x = "Genre", y = "Rating")+ 
     theme(legend.position = "none")
 
-grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
+grid.arrange(p1, p2, p3, p4, p5, nrow = 3,
+             top = textGrob("IMDB Rating Plotted Against Each Explanatory Variable",
+                            gp=gpar(fontsize=14,font=3)))
 
 ```
 
@@ -148,10 +151,15 @@ films %>%
   adorn_pct_formatting() %>% 
   adorn_ns()
 
+# assign true false to be dataset with ratings over 7 as true or false 
+true_false <- films
+
 # plot proportions of films over and under 7 that are from each genre
-ggplot(films, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
+ggplot(true_false, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
     geom_bar(position="dodge", stat="count") +
-    labs(y = "Proportion")
+  labs(title = "Proportion of Films that are Rated Over/Under 7 by Genre", x = "Genre", y = "Proportion", 
+        fill = "Rated Over or Under 7\n")
+
 ```
 
 This histogram shows the genre of all movies with a rating greater than 7.0. Through this figure, we can find that comedy movies occupy a very large proportion of movies with a score greater than 7.0, while romance movies have almost no high rating.
@@ -250,7 +258,7 @@ confint(model1) %>%
 
 # calculate confindence intervals
 plot_model(model1, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Year of Release- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This tells us $\alpha$ = 6.44 and that $\beta = -0.0036$. We can see that the p-values of the coefficients are not significant even at the 5% level. Both 95% confidence intervals contain zero. We can conclude that this is a poor performing model.
@@ -268,7 +276,8 @@ ggplot(data = rating_year, aes(x = year, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
-  labs(x = "Year", y = "Probability of films considered as Excellent films") 
+  labs(x = "Year", y = "Probability of films considered as Excellent films",
+       title = "Probability of a Film Receiving a Rating \nOver 7 based on the Year Released") 
 
 ```
 
@@ -305,7 +314,7 @@ confint(model2) %>%
   kable() 
 
 plot_model(model2, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Budget of Film- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This tells us $\alpha$ = 2.61 and that $\beta = -0.04$. We can see that the p-values of the coefficients are significant even at the highest level. Both 95% confidence intervals do not contain zero. We can conclude that this is a good performing model.
@@ -323,7 +332,8 @@ ggplot(data = rating_length, aes(x = length, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
-  labs(x = "Length in Minutes", y = "Probability of films considered as Excellent films") 
+  labs(x = "Length in Minutes", y = "Probability of films considered as Excellent films",
+       title = "Probability of a Film Receiving a Rating Over 7 based on its Length") 
 
 ```
   
@@ -360,7 +370,7 @@ confint(model3) %>%
   kable() 
 
 plot_model(model3, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Budget of Film- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This tells us $\alpha$ = -2.99 and that $\beta = 0.19$. We can see that the p-values of the coefficients are significant even at the highest level. Both 95% confidence intervals do not contain zero. We can conclude that this is a good performing model.
@@ -378,7 +388,8 @@ ggplot(data = rating_budget, aes(x = budget, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
-  labs(x = "Budget (in $1000000)", y = "Probability of films considered as Excellent films") 
+  labs(x = "Budget (in $1000000)", y = "Probability of films considered as Excellent films",
+       title = "Probability of a Film Receiving a Rating Over 7 based on its Budget") 
 
 
 ```
@@ -416,7 +427,7 @@ confint(model4) %>%
   kable() 
 
 plot_model(model4, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Log of Positive Votes Receiced- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This tells us $\alpha$ = 0.06 and that $\beta = -0.2$. We can see that the p-values of the $\beta$ coefficient is significant even at the highest level but the intercept is not. We can conclude that this is a model that performs okay but not as well as others.
@@ -435,7 +446,8 @@ ggplot(data = rating_votes, aes(x = votes, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
               se = FALSE) +
-  labs(x = "log(Votes Recieved)", y = "Probability of films considered as Excellent films") 
+  labs(x = "log(Votes Recieved)", y = "Probability of films considered as Excellent films",
+       title = "Probability of a Film Receiving a Rating Over 7 based \non Positive Votes Received") 
 
 ```
 
@@ -462,10 +474,10 @@ films %>%
   adorn_ns() 
 
 # plot proportions of films over and under 7 that are from each genre
-ggplot(films, aes(x= genre,  y = ..prop.., group=over7, fill=over7)) + 
+ggplot(true_false, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
     geom_bar(position="dodge", stat="count") +
-    labs(y = "Proportion")
-
+  labs(title = "Proportion of Films that are Rated Over/Under 7 by Genre", x = "Genre", y = "Proportion", 
+        fill = "Rated Over or Under 7\n")
 ```
 
 The equation for this model is: 
@@ -498,7 +510,7 @@ confint(model5) %>%
   kable() 
 
 plot_model(model5, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Film Genre- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This tells us $\alpha$ = -1.70 and that $\beta_{i}$ values are 2.77, 2.07, 3.91, -1.14, -1.13 and 6 for animation, comedy, documentary, drama, romance and short respectively. We can see that the p-values of every coefficient except the romance genre is significant even at the highest level. We can see that if a film is in the animation, comedy, documentary or short film categories it will improve the chances of the film getting a high score. We can conclude that this is a model that performs well and we can experiment with removing the romance genre films to see how it affects the model performance.
@@ -537,7 +549,7 @@ confint(model6) %>%
   kable() 
 
 plot_model(model6, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Full Model- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 
@@ -594,7 +606,7 @@ confint(model7) %>%
   kable() 
 
 plot_model(model7, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Optimal AIC Model- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 We can see that all of the variables are significant to a high level except the animation and romance genres.
 
@@ -626,7 +638,7 @@ confint(model8) %>%
   kable() 
 
 plot_model(model8, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Optimal Model (sig. factors only)-Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 
 ```
 
@@ -664,7 +676,7 @@ confint(model9) %>%
   kable() 
 
 plot_model(model9, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Simplified Optimal Model- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
 
 This gives very similar results to the optimal model but it is simpler.
@@ -681,7 +693,7 @@ summary(model10)
 
 # plot the model
 plot_model(model10, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "C Log-Log Model- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 
 # create logistic regression model with all of the explanatory variables but use probut regression
 model11 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "probit"))
@@ -690,7 +702,7 @@ summary(model11)
 
 # plot the model
 plot_model(model11, show.values = TRUE, transform = NULL,
-           title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+           title = "Probit Model- Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 
 # find optimal models using c log-log and probit regression
 cloglog.step.forward = step(model10,direction="forward")   

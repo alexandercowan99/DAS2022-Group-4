@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.20)  21 MAR 2022 18:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.20)  22 MAR 2022 22:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -579,7 +579,7 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 21
 (/Users/Alexander/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.pdf, id=44, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.pdf, id=45, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 225.
@@ -589,150 +589,151 @@ Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-4-1.p
                                                   \__shipout_drop_firstpage_...
 l.299 
       ] [5]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf, id=72, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf, id=74, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 386.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 389.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf, id=73, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf, id=75, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 393.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 396.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [6 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-7-1.pdf>] [7 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-8-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf, id=96, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf, id=98, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf  used on input line 477.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf  used on input line 482.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [8]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf, id=101, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf, id=103, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf  used on input line 484.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf  used on input line 489.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [9 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-10-1.pdf>] [10 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-11-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf, id=123, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf, id=125, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf  used on input line 568.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf  used on input line 575.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf, id=128, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf, id=130, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf  used on input line 575.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf  used on input line 582.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [12 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-13-1.pdf>] [13 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-14-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf, id=152, 469.755pt x 325.215pt>
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf, id=154, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf  used on input line 657.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf  used on input line 667.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[14 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf, id=162, 469.755pt x 325.215pt>
+[14]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf, id=159, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf  used on input line 664.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf  used on input line 674.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf, id=174, 469.755pt x 325.215pt>
+[15 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-16-1.pdf>] [16 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-17-1.pdf>]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf, id=180, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf  used on input line 715.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf  used on input line 726.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[16 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf, id=187, 469.755pt x 325.215pt>
+[17 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-19-1.pdf>]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf, id=192, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf  used on input line 807.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf  used on input line 820.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[17] [18 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf>] [19]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf, id=210, 469.755pt x 325.215pt>
+[18] [19 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-21-1.pdf>] [20]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf, id=215, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf  used on input line 934.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf  used on input line 949.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[20 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf>]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1061--1061
-[]\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
- []
-
-[21] [22]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1131--1131
+[21 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-23-1.pdf>] [22]
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1077--1077
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
  []
 
 [23]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1194--1194
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1147--1147
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
  []
 
 [24]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1266--1266
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1210--1210
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
- []
-
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf, id=239, 469.755pt x 325.215pt>
-File: Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
-<use Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf  used on input line 1308.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1308--1311
-[][]
  []
 
 [25]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1364--1364
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1283--1283
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
  []
 
-[26 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf, id=256, 469.755pt x 325.215pt>
+[26]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf, id=249, 469.755pt x 325.215pt>
+File: Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
+<use Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf>
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf  used on input line 1326.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1326--1329
+[][]
+ []
+
+[27 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-26-1.pdf>]
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1385--1385
+[]\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "logit"),[] 
+ []
+
+[28]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf, id=265, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf  used on input line 1402.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf  used on input line 1424.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[27] [28 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf, id=273, 469.755pt x 325.215pt>
+[29 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-28-1.pdf>]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf, id=278, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf  used on input line 1515.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf  used on input line 1539.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[29] [30 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf, id=290, 469.755pt x 325.215pt>
+[30] [31 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-30-1.pdf>]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf, id=296, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf  used on input line 1579.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf  used on input line 1605.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[31 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf>]
-<Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf, id=301, 469.755pt x 325.215pt>
+[32 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-31-1.pdf>]
+<Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf, id=306, 469.755pt x 325.215pt>
 File: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf Graphic file (type pdf)
 <use Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf>
-Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf  used on input line 1631.
+Package pdftex.def Info: Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf  used on input line 1659.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[32] [33 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf>]
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 1752--1752
+[33] [34 <./Group_4_Analysis_files/figure-latex/unnamed-chunk-31-2.pdf>]
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 1781--1781
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "cloglog"),[] 
  []
 
-[34]
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 1822--1822
+[35]
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 1851--1851
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "cloglog"),[] 
  []
 
-[35] [36]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1943--1943
+[36] [37]
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1972--1972
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "probit"),[] 
  []
 
-[37]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 2013--2013
+[38]
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 2042--2042
 []\T1/lmtt/m/n/10 ## glm(formula = over7 ~ year + length + budget + genre, family = binomial(link = "probit"),[] 
  []
 
-[38] [39] [40] (./Group_4_Analysis.aux)
+[39] [40] [41] (./Group_4_Analysis.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -740,18 +741,18 @@ Package rerunfilecheck Info: File `Group_4_Analysis.out' has not changed.
 (rerunfilecheck)             Checksum: 88B3756E5F3A3D5118A382650F12B93E;524.
  ) 
 Here is how much of TeX's memory you used:
- 12888 strings out of 480236
- 208730 string characters out of 5894705
+ 12891 strings out of 480236
+ 208762 string characters out of 5894705
  498826 words of memory out of 5000000
- 30504 multiletter control sequences out of 15000+600000
- 512312 words of font info for 68 fonts, out of 8000000 for 9000
+ 30505 multiletter control sequences out of 15000+600000
+ 512631 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,10n,63p,501b,468s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Group_4_Analysis.pdf (40 pages, 715892 bytes).
+{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/Alexander/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/Alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on Group_4_Analysis.pdf (41 pages, 738043 bytes).
 PDF statistics:
- 421 PDF objects out of 1000 (max. 8388607)
- 316 compressed objects within 4 object streams
- 80 named destinations out of 1000 (max. 500000)
+ 430 PDF objects out of 1000 (max. 8388607)
+ 323 compressed objects within 4 object streams
+ 81 named destinations out of 1000 (max. 500000)
  123 words of extra memory for PDF output out of 10000 (max. 10000000)
 
