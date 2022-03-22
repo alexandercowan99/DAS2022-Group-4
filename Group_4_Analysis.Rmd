@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ```{r libraries, eval=TRUE, echo=FALSE, warning=FALSE}
+# load in necessary libraries
 library(tidyverse)
 library(dplyr)
 library(moderndive)
@@ -30,6 +31,7 @@ require(MuMIn)
 library(skimr)
 options(na.action = "na.fail")
 
+# read in dataset 4 
 films <- read_csv("dataset4.csv")
 ```
 
@@ -54,6 +56,8 @@ Our task is the find which properties of a film influence whether a film receive
 First we will plot the relationships between IMBD rating and each of the explanatory variables. Each plot has a red dotted line at rating equals 7 as we are interested in films that receive a rating over 7.
 
 ```{r, eval=TRUE, echo=FALSE}
+
+# plot scatterplots between each numerical explanatory variable and rating
 p1 <- ggplot(data = films, aes(x = year, y = rating, fill = rating)) +
   geom_point() +
   geom_hline(yintercept=7, linetype="dotted", color = "red")+
@@ -78,6 +82,8 @@ p4 <- ggplot(data = films, aes(x = log(votes), y = rating, fill = rating)) +
   labs(x = "Log(Votes)", y = "Rating")+ 
   theme(legend.position = "none")
 
+# plot boxplot for the rating of each genre of film
+
 p5 <- ggplot(data = films, aes(x=genre, y=rating, fill=genre)) + 
     geom_boxplot()+
     geom_hline(yintercept=7, linetype="dotted",color = "red")+
@@ -91,13 +97,15 @@ grid.arrange(p1, p2, p3, p4, p5, nrow = 3)
 
 Summary statistics were presented in the following table for each factor separately.
 ```{r, eval = TRUE, echo=FALSE}
+# change rating value to TRUE if over 7 and FALSE if not
 films$rating[which(films$rating>7)] <- "TRUE"
 films$rating[which(films$rating<=7)] <- "FALSE"
 
-
+# filter the data for only ratings that are over 7
 dataset <- films %>% 
   filter(rating==TRUE) 
 
+# find summary statistics for films with rating over 7
 my_skim <- skim_with(base = sfl(n = length))
 
 dataset %>%
@@ -112,7 +120,7 @@ dataset %>%
 This table shows the year of production, length of films, film budget ($1 million), and the number of positive audience votes for all films rated 7.0 or higher. We are unable to show the genres of movies in this table and the following table, the genre analysis will be shown in the histogram below.
 
 ```{r, eval = TRUE, echo=FALSE}
-
+# filter data to ratings less than 7 and create table of summary statistics
 dataset <- films %>% 
   filter(rating==FALSE) 
 
@@ -133,11 +141,14 @@ By comparing the two tables, we can find that the number of movies with a rating
 
 
 ```{r, eval = TRUE, echo=FALSE}
+# find counts and percentages for films that are rated over 7 and less than 7 for each genre of film 
 films %>% 
   tabyl(genre,rating) %>% 
   adorn_percentages() %>% 
   adorn_pct_formatting() %>% 
   adorn_ns()
+
+# plot proportions of films over and under 7 that are from each genre
 ggplot(films, aes(x= genre,  y = ..prop.., group=rating, fill=rating)) + 
     geom_bar(position="dodge", stat="count") +
     labs(y = "Proportion")
@@ -151,16 +162,20 @@ This histogram shows the genre of all movies with a rating greater than 7.0. Thr
 We have created a new variable named over7 which is a binary variable which indicates whether the rating a film received is over 7 or not. If a film has a rating over 7 it will have the value 1 in this variable. The explanatory variables we will use to model over 7 are- genre, votes, length, budget and year. There are 31 one unique ways to choose different combinations of these five explanatory variables so to start with we will fit all of these models and generate a table of the objective criteria of each model. This table can be found below:
 
 ```{r, echo=FALSE, eval=TRUE}
+# create binary output variable for films rated over7
 films <- read_csv("dataset4.csv")
 films$over7 <- 0
 
+# remove rating and film id columns
 films$over7[films$rating>=7.0] <- 1
 films$over7[films$rating<7.0] <- 0
 films <- films[c(-1, -7)]
 
+# remove entries that contain NAs
 films <- films %>% 
   na.omit()
 
+# create variable that contains the names of the explanatory variables
 names <- names(films[-6])
 
 # iterate through all possible models and find best fit based on 
@@ -173,14 +188,16 @@ out <- unlist(lapply(1:5, function(n) {
   formulas <- apply(combinations, 1, 
                     function(row) paste0("over7 ~ ", paste0(row, collapse = "+")))}))
 
-mods = lapply(out, function(frml) glm(frml, data=films, family = binomial(link = "logit")))
+# for each formula enter the formula into a logistic regression model and save output to table named
+# all_models
 
 all_models <- bind_rows(lapply(out, function(frml) {
   a = glance(glm(frml, data=films, family = binomial(link = "logit")))
   a$frml = frml
   return(a)
 }))
-
+# for each formula enter the formula into a logistic regression model and save output to table named
+# all_models
 all_models <- all_models %>% 
   arrange(AIC) %>% 
   dplyr::select(frml, AIC, BIC, deviance) %>% 
@@ -214,6 +231,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model between over7 and the year of film release and show summary
 model1 = glm(over7 ~ year, data = films, 
              family = binomial(link = "logit"))
 
@@ -226,9 +244,11 @@ model1 %>%
 
 
 ```{r, echo=TRUE}
+# calculate confindence intervals
 confint(model1) %>%
   kable() 
 
+# calculate confindence intervals
 plot_model(model1, show.values = TRUE, transform = NULL,
            title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 ```
@@ -236,12 +256,14 @@ plot_model(model1, show.values = TRUE, transform = NULL,
 This tells us $\alpha$ = 6.44 and that $\beta = -0.0036$. We can see that the p-values of the coefficients are not significant even at the 5% level. Both 95% confidence intervals contain zero. We can conclude that this is a poor performing model.
 
 ```{r, echo=FALSE}
+# create table of over7 and year and convert log-odd to odds and get probability values of model
 rating_year <- films %>% 
   dplyr::select(over7, year) %>% 
   mutate(logodds.Excellent = predict(model1)) %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model1))
 
+# create table of over7 and year and convert log-odd to odds and get probability values of model
 ggplot(data = rating_year, aes(x = year, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
@@ -268,6 +290,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model between over7 and the length of film in minutes and show summary
 model2 = glm(over7 ~ length, data = films, 
              family = binomial(link = "logit"))
 model2 %>%
@@ -277,6 +300,7 @@ model2 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model2) %>%
   kable() 
 
@@ -287,12 +311,14 @@ plot_model(model2, show.values = TRUE, transform = NULL,
 This tells us $\alpha$ = 2.61 and that $\beta = -0.04$. We can see that the p-values of the coefficients are significant even at the highest level. Both 95% confidence intervals do not contain zero. We can conclude that this is a good performing model.
 
 ```{r, echo=FALSE}
+# create table of over7 and length and convert log-odd to odds and get probability values of model2
 rating_length <- films %>% 
   dplyr::select(over7, length) %>% 
   mutate(logodds.Excellent = predict(model2)) %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model2))
 
+# plot the probability of a film being rating as over7 based on film length
 ggplot(data = rating_length, aes(x = length, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
@@ -319,6 +345,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model between over7 and the budget of a film and show summary
 model3 = glm(over7 ~ budget, data = films, 
              family = binomial(link = "logit"))
 model3 %>%
@@ -328,6 +355,7 @@ model3 %>%
 
 
 ```{r, echo=TRUE}
+# create logistic regression model between over7 and the budget of a film and show summary
 confint(model3) %>%
   kable() 
 
@@ -338,12 +366,14 @@ plot_model(model3, show.values = TRUE, transform = NULL,
 This tells us $\alpha$ = -2.99 and that $\beta = 0.19$. We can see that the p-values of the coefficients are significant even at the highest level. Both 95% confidence intervals do not contain zero. We can conclude that this is a good performing model.
 
 ```{r, echo=FALSE}
+# create table of over7 and budget and convert log-odd to odds and get probability values of model3
 rating_budget <- films %>% 
   dplyr::select(over7, budget) %>% 
   mutate(logodds.Excellent = predict(model3)) %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model3))
 
+# plot the probability of a film being rating as over7 based on film budget
 ggplot(data = rating_budget, aes(x = budget, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
@@ -370,6 +400,8 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model between over7 and the log of the number of positive votes
+# the film received from viewers and show summary
 model4 = glm(over7 ~ log(votes), data = films, 
              family = binomial(link = "logit"))
 model4 %>%
@@ -379,6 +411,7 @@ model4 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model4) %>%
   kable() 
 
@@ -389,6 +422,7 @@ plot_model(model4, show.values = TRUE, transform = NULL,
 This tells us $\alpha$ = 0.06 and that $\beta = -0.2$. We can see that the p-values of the $\beta$ coefficient is significant even at the highest level but the intercept is not. We can conclude that this is a model that performs okay but not as well as others.
 
 ```{r, echo=FALSE}
+# create table of over7 and log(votes) and convert log-odd to odds and get probability values of model4
 rating_votes <- films %>% 
   dplyr::select(over7, votes) %>% 
   mutate(votes = log(votes)) %>% 
@@ -396,6 +430,7 @@ rating_votes <- films %>%
   mutate(odds.Excellent = exp(logodds.Excellent)) %>%
   mutate(probs.Excellent = fitted(model4))
 
+# create table of over7 and log(votes) and convert log-odd to odds and get probability values of model4
 ggplot(data = rating_votes, aes(x = votes, y = probs.Excellent)) +
   geom_smooth(method="glm", 
               method.args = list(family="binomial"), 
@@ -406,6 +441,7 @@ ggplot(data = rating_votes, aes(x = votes, y = probs.Excellent)) +
 
 We can compare the objective criteria of these models using the AIC and BIC. It appears that the second model (rating modeled with the movie length) it the best as it has the lowest AIC and BIC values.
 ```{r, eval=TRUE,echo=TRUE}
+# compare AIC and BIC of model1- model4
 AIC(model1, model2, model3, model4)  
 BIC(model1, model2, model3, model4)
 
@@ -418,12 +454,14 @@ BIC(model1, model2, model3, model4)
 The next model is investigating the relationship between the genre of a film and whether or not the film received a rating over 7. We will look at the counts of films in each category an how many received an excellent score.
 
 ```{r, eval=TRUE, echo=FALSE}
+# find counts and percentages for films that are rated over 7 and less than 7 for each genre of film 
 films %>% 
   tabyl(over7, genre) %>% 
   adorn_percentages() %>% 
   adorn_pct_formatting() %>% 
   adorn_ns() 
 
+# plot proportions of films over and under 7 that are from each genre
 ggplot(films, aes(x= genre,  y = ..prop.., group=over7, fill=over7)) + 
     geom_bar(position="dodge", stat="count") +
     labs(y = "Proportion")
@@ -445,6 +483,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# plot proportions of films over and under 7 that are from each genre
 model5 = glm(over7 ~ genre, data = films, 
              family = binomial(link = "logit"))
 model5 %>%
@@ -454,6 +493,7 @@ model5 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model5) %>%
   kable() 
 
@@ -482,6 +522,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model between over7 and all of the explanatory variables
 model6 = glm(over7 ~  year + length + budget + log(votes) + genre, data = films, 
              family = binomial(link = "logit"))
 model6 %>%
@@ -491,6 +532,7 @@ model6 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model6) %>%
   kable() 
 
@@ -502,6 +544,7 @@ plot_model(model6, show.values = TRUE, transform = NULL,
 We can see that many of the variables are significant but there are also a substantial number that are not even at the 10% level. Using stepwise regression we can look to find an optimal model. As we found in the table earlier the "best model" includes length, budget, genre and year.
 
 ```{r, eval=TRUE, echo=TRUE}
+# find optimal model using stepwise regression- try forward, backwards and both directions
 logit.step.forward = step(model6,direction="forward")   
 summary(logit.step.forward)
 
@@ -536,6 +579,7 @@ where,
 
 
 ```{r, eval=TRUE}
+# create logistic regression model that was found to have the lowest AIC
 model7 = glm(over7 ~  year + length + budget + genre, data = films, 
              family = binomial(link = "logit"))
 model7 %>%
@@ -545,6 +589,7 @@ model7 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model7) %>%
   kable() 
 
@@ -559,10 +604,13 @@ We are going to look at the exact same model as before but we will remove the ca
 
 
 ```{r, eval=TRUE}
+# filter data to remove insignificant genres
 genre.noRomanceandAnimation = films %>%
   filter(genre != "Romance" ) %>%
   filter(genre != "Animation") %>%
   drop_na
+
+# create logistic regression model that was found to have lowest AIC but with non significant variables removed
 
 model8 = glm(over7 ~  year + length + budget + genre, data = genre.noRomanceandAnimation, 
              family = binomial(link = "logit"))
@@ -573,6 +621,7 @@ model8 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model8) %>%
   kable() 
 
@@ -600,6 +649,7 @@ where,
 * $\beta_{i}$ is the regression value for the $i^th$ variable.
 
 ```{r, eval=TRUE}
+# create logistic regression model that is close to having best AIC but is simpler
 model9 = glm(over7 ~ length + budget + genre, data = films, 
              family = binomial(link = "logit"))
 model9 %>%
@@ -609,6 +659,7 @@ model9 %>%
 
 
 ```{r, echo=TRUE}
+# find coeff confidence intervals and plot the model
 confint(model9) %>%
   kable() 
 
@@ -623,20 +674,25 @@ This gives very similar results to the optimal model but it is simpler.
 We will now try using c log-log and a probit models to investigate the relationship between the explanatory variables and a film getting a score above 7. We will use all the explanatory variables in this model. We will also use stepwise regression to find the most optimal models for each method.
 
 ```{r}
-
+# create logistic regression model with all of the explanatory variables but use c log-log regression
 model10 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "cloglog"))
 
 summary(model10)
 
+# plot the model
 plot_model(model10, show.values = TRUE, transform = NULL,
            title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
 
+# create logistic regression model with all of the explanatory variables but use probut regression
 model11 <- glm(over7~ year + length + budget + log(votes) + genre, data = films, family = binomial(link = "probit"))
 
 summary(model11)
 
+# plot the model
 plot_model(model11, show.values = TRUE, transform = NULL,
            title = "Log-Odds (Excellent films)", show.p = FALSE, vline.color = "cyan")
+
+# find optimal models using c log-log and probit regression
 cloglog.step.forward = step(model10,direction="forward")   
 summary(cloglog.step.forward)
 
@@ -656,6 +712,7 @@ summary(probit.step.backward)
 probit.stepwise = step(model11,direction="both")
 summary(probit.stepwise) 
 
+# compare AIC and BIC of full models using each type of logit, cloglog and probit 
 AIC(model6,model10,model11) 
 BIC(model6,model10,model11)
 
@@ -667,7 +724,7 @@ We yield very similar results to our binomial regression model, to see whether t
 
 In conclusion, we have investigated which properties influence whether a film receives a rating greater than 7 on the IMDB database. Out of all combinations of the 5 explanatory variables we have found that the best model for predicting whether a film will receives a rating greater than 7 includes the length of the film, the budget of the film, the genre of the film and the year the film was released. We settled on this model by iterating through all the possible combinations of models and choosing the model with the lowest AIC and BIC. We also used stepwise regression to corroborate this choice. 
 
-In the optimal model year and length of film have a significant influence on the probability that a film will receive a rating greater than 7 but the relative influence of these variables is small. The log odds of a film being rated over 7 will increase by 0.01 for every unit increase in the year of release of the film. Similarly, the log odds of a film being rated over 7 will decrease by 0.07 for every minute increase in the film length. For every $1000000 increase of a films budget the log odds that the film will receive a score larger than 7 will increase by 0.52. The biggest influence on the log odds of the film receiving an excellent score is the film genre. In the optimal AIC model we found that only two of the genres are insignificant when predicting if the score of a film will be greater than 7 and these are animation and romance. The categories comedy, documentary and short film all have a positive influence on the log odds of getting a rating larger than 7 with increases of 3.16, 5.27 and 3.48 respectively. If the genre of the film is drama then the log odds of it receiving a score greater than 7 is reduced by 1.68. Therefore in this optimal AIC model we can say that the genre of the film has the largest influence on whether a film will receive a score greater than 7 followed by the budget of the film. Although they are significant in the model the length of the film and the year of the film have a less significant impact on the outcome of the films rating.
+In the optimal model year and length of film have a significant influence on the probability that a film will receive a rating greater than 7 but the relative influence of these variables is small. The log odds of a film being rated over 7 will increase by 0.01 for every unit increase in the year of release of the film. Similarly, the log odds of a film being rated over 7 will decrease by 0.07 for every minute increase in the film length. For every $1000000 increase of a films budget the log odds that the film will receive a score larger than 7 will increase by 0.52. The biggest influence on the log odds of the film receiving an excellent score is the film genre. In the optimal AIC model we found that only two of the genres are insignificant when predicting if the score of a film will be greater than 7 and these are animation and romance. The categories comedy, documentary and short film all have a positive influence on the log odds of getting a rating larger than 7 with increases of 3.16, 5.27 and 3.48 respectively. If the genre of the film is drama then the log odds of it receiving a score greater than 7 is reduced by 1.68. Therefore in this optimal AIC model we can say that the genre of the film has the largest influence on whether a film will receive a score greater than 7 followed by the budget of the film. Although they are significant in the model the length of the film and the year of the film have a less significant impact on the outcome of the films rating. It is somewhat surprising the the number of positive votes that a film receives from viewers does not have a significant relationship with a film receiving a rating over 7.
 
 Alongside finding the optimal model we also investigated other combinations of explanatory variables that could be used to model film rating. We found that in models with a single explanatory variable that numerical explanatory variable that the length of a film and the budget of a film each had significant impact on the log odds that a film receives a rating over 7. An increase of $1000000 increases the log odds by 0.18 and a minute increase in the length of a film decreases the log odds by 0.04. When modelling the rating and the film categories we can see that the category on the film has a large influence of the log odds of being greater than 7. The log odds difference in this model for the genres animation, comedy, documentary, drama, romance and short are 2.77, 2.07, 3.91, -1.14, -1.13 and 6 respectively. This is a big range of values, especially compared to the other factors, which means that depending on the category of film the probability of getting an excellent score is very different.
 
