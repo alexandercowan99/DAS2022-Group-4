@@ -119,7 +119,7 @@ dataset %>%
   transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
             Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
             Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
-  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating larger than 7).',
+  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating larger than 7 ',
         booktabs = TRUE, linesep = "", digits = 2) 
 ```
 This table shows the year of production, length of films, film budget ($1 million), and the number of positive audience votes for all films rated 7.0 or higher. We are unable to show the genres of movies in this table and the following table, the genre analysis will be shown in the histogram below.
@@ -137,7 +137,7 @@ dataset %>%
   transmute(Variable=skim_variable, n=n, Mean=numeric.mean, SD=numeric.sd,
             Min=numeric.p0, Q1=numeric.p25, Median=numeric.p50, Q3=numeric.p75,
             Max=numeric.p100, IQR = numeric.p75-numeric.p50) %>%
-  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating smaller than 7).',
+  kable(caption = '\\label{tab:summary} Summary statistics on number of films which are rating smaller than 7 ',
         booktabs = TRUE, linesep = "", digits = 2) 
 ```
 
