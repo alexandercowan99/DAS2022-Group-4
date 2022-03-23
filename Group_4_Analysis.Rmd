@@ -491,8 +491,7 @@ where,
 
 
 * $p$ is the probability that the film is ranked over 7,
-* votes is the number of positve votes the film recieved by viewers,
-* $\alpha$ is the intercept value
+* $\alpha$ is the intercept value,
 * $\beta_{genre}$ is the regression value for the $i^th$ genre.
 
 
